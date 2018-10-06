@@ -10,7 +10,8 @@ var mongoose= require('mongoose');
 var LocalStrategy= require('passport-local').Strategy;
 var mongo = require('mongodb');
 var cookieParser= require('cookie-parser');
-const PORT = 8080;
+var flash= require('connect-flash');
+const PORT = 3000;
 
 // Route requires
 const user = require('./routes/user')
@@ -61,13 +62,19 @@ if (process.env.MONGODB_URI) {
   });
   
 
-
-
-// End of what I added
-
 // Passport
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(flash());
+
+// Declare global vars to be used by app 
+app.use(function (req, res, next){
+	res.locals.success_msg = req.flash('success_msg');
+	res.locals.error_msg = req.flash('error_msg');
+	res.locals.error = req.flash('error');
+	res.locals.user = req.user || null;
+	next();
+});
 
 
 // Routes

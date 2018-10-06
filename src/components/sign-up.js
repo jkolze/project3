@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-
+import { Redirect } from 'react-router-dom'
 class Signup extends Component {
 	constructor() {
 		super()
@@ -47,7 +47,11 @@ class Signup extends Component {
 
 
 render() {
-	return (
+	{ // this is what redirects to login page
+        if (this.state.redirectTo) {
+            return <Redirect to={{ pathname: this.state.redirectTo }} />
+        } else {
+            return (
 		<div className="SignupForm">
 			<h4>Sign up</h4>
 			<form className="form-horizontal">
@@ -93,6 +97,9 @@ render() {
 
 	)
 }
-}
+};
+};
+};
 
-export default Signup
+
+export default Signup;
